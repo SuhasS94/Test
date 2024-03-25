@@ -5,11 +5,10 @@ import java.util.Optional;
 
 
 import com.example.demo.config.Student;
-
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +25,16 @@ public class UserService {
 		String responseMessage = null;
 		Optional<Student> userByName = userRepo.findUserByName(student.getName());
 
+		if (student.getName().isEmpty()) {
+			if (userByName.isPresent()){
+				throw new ResourceNotFoundException();
+			}
+ 			throw new ResourceNotFoundException();
 
+		}else {
 			userRepo.save(student);
 			return new ResponseEntity<String>("User Added", HttpStatus.ACCEPTED);
-
+		}
 	}
 
 	public ResponseEntity<?> deleteUser(String name) {
@@ -38,7 +43,7 @@ public class UserService {
 			Student delUser = deleteStudent.get();
 			Long ID = delUser.getId();
 			userRepo.deleteById(ID);
-			return new ResponseEntity<String>("User Deleted", HttpStatus.RESET_CONTENT);
+			return new ResponseEntity<>(HttpStatus.RESET_CONTENT);
 		}else {
 			return new ResponseEntity<String>("User Not Found", HttpStatus.BAD_REQUEST);
 		}
@@ -49,8 +54,6 @@ public class UserService {
 			Student updatedStudentRepo = userRepo.findUserByID(id).orElseThrow(() -> new IllegalStateException("User with ID" + id + "already exists"));
 			updatedStudentRepo.setName(student.getName());
 			updatedStudentRepo.setEmail(student.getEmail());
-			updatedStudentRepo.setAge(student.getAge());
-			updatedStudentRepo.setSurname(student.getSurname());
 			userRepo.save(updatedStudentRepo);
 			return "User Saved";
 		}catch(Exception e){

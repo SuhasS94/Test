@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.Student;
+import com.example.demo.exception.HeaderNotFoundException;
 import com.example.demo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,11 @@ public class UserController {
     @PostMapping(path = "/post")
     //@ResponseBody
     public ResponseEntity<?> regUser(@RequestBody Student student, @RequestHeader(value = "Auth") String authHeader){
-
+        if(authHeader.equals("Suhas")){
             return userService.addUser(student);
-
+        }else {
+            throw new HeaderNotFoundException();
+        }
     }
 
     @DeleteMapping(path = "/{name}")
