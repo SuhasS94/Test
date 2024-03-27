@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.entity.Student;
 import com.example.demo.repo.UserRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

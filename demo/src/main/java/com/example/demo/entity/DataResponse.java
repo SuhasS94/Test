@@ -1,14 +1,19 @@
 package com.example.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
-public class DataResponse {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class DataResponse extends RuntimeException{
 
-    public String cause;
-    public List<String> stackTrace;
     public Integer statusCode;
-    public String msg;
     public String message;
-    public List<String> suppressed;
-    public String localisedMessage;
+
 }

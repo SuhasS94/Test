@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.config.Student;
+import com.example.demo.entity.Student;
+import com.example.demo.entity.DataResponse;
 import com.example.demo.exception.HeaderNotFoundException;
 import com.example.demo.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+//@Pointcut("execution(* com.example.demo.controller.*.*(..))")
 @RestController
 //@RequestMapping(path = "/hi")
 public class UserController {
@@ -28,12 +31,8 @@ public class UserController {
 
     @PostMapping(path = "/post")
     //@ResponseBody
-    public ResponseEntity<?> regUser(@RequestBody Student student, @RequestHeader(value = "Auth") String authHeader){
-        if(authHeader.equals("Suhas")){
-            return userService.addUser(student);
-        }else {
-            throw new HeaderNotFoundException();
-        }
+    public ResponseEntity<?> regUser(@RequestBody Student student){
+        return userService.addUser(student);
     }
 
     @DeleteMapping(path = "/{name}")

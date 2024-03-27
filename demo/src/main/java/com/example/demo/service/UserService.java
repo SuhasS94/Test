@@ -4,20 +4,29 @@ import java.util.List;
 import java.util.Optional;
 
 
-import com.example.demo.config.Student;
+import com.example.demo.entity.Student;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repo.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig(cacheNames = {"Nanna Cache"})
 public class UserService {
 
 	@Autowired
 	private UserRepo userRepo;
+
+	private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
+	//@Cacheable
 	public ResponseEntity<List<Student>> getUsers(){
+		log.info("Cahce String");
 		return new ResponseEntity<List<Student>>(userRepo.findAll(), HttpStatus.CREATED);
 	}
 
@@ -56,8 +65,10 @@ public class UserService {
 			updatedStudentRepo.setEmail(student.getEmail());
 			userRepo.save(updatedStudentRepo);
 			return "User Saved";
-		}catch(Exception e){
+		}catch(ResourceNotFoundException e){
 			return e.getMessage();
 		}
 	}
+
+
 }

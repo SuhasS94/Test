@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,8 +16,8 @@ public class Student {
     private Long id;
     private int age;
     private String name;
-    @Transient
-    private String status;
+//    @Transient
+//    private String status;
     private String email;
     private String surname;
     public Student(int age, String name, String email, String surname) {

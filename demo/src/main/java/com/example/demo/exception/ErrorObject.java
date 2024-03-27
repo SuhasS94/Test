@@ -14,5 +14,4 @@ public class ErrorObject {
     private int statusCode;
     private String msg;
 
-
 }

@@ -16,11 +16,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.OK);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(HeaderNotFoundException.class)
     public ResponseEntity<ErrorObject> handleException(HeaderNotFoundException e){
         ErrorObject errorObject = new ErrorObject();
         errorObject.setStatusCode(HttpStatus.UNAUTHORIZED.value());
         errorObject.setMsg("Incorrect Header");
-        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.OK);
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.BAD_REQUEST);
     }
 }
