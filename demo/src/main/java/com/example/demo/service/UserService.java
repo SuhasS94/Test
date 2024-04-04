@@ -26,7 +26,6 @@ public class UserService {
 
 	//@Cacheable
 	public ResponseEntity<List<Student>> getUsers(){
-		log.info("Cahce String");
 		return new ResponseEntity<List<Student>>(userRepo.findAll(), HttpStatus.CREATED);
 	}
 
@@ -35,11 +34,10 @@ public class UserService {
 		Optional<Student> userByName = userRepo.findUserByName(student.getName());
 
 		if (student.getName().isEmpty()) {
-			if (userByName.isPresent()){
-				throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException("User name is empty");
 			}
- 			throw new ResourceNotFoundException();
-
+		if (userByName.isPresent()){
+			throw new ResourceNotFoundException("User already present");
 		}else {
 			userRepo.save(student);
 			return new ResponseEntity<String>("User Added", HttpStatus.ACCEPTED);

@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AopConfig {
 
-    private Logger log= LoggerFactory.getLogger(AopConfig.class);
+    private final Logger log= LoggerFactory.getLogger(AopConfig.class);
 
     @Before(value = "execution(* com.example.demo.controller.*.*(..))")
     public void logStatementBefore(JoinPoint joinPoint){

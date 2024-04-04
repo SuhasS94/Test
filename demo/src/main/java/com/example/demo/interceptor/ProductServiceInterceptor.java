@@ -24,15 +24,9 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
             System.out.println("Request URL: " + request.getRequestURI());
             String rHeader = request.getHeader("auth");
             if(!rHeader.equals("Suhas")){
-                throw new HeaderNotFoundException(
-
-                );
-            }
-        }
-
+                throw new HeaderNotFoundException();}}
         catch (Exception e) {
             throw new HeaderNotFoundException();
-            //return false;
         }
         return true;
     }
